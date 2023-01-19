@@ -4,13 +4,13 @@ import { DrupalNode } from "next-drupal"
 
 import { drupal } from "lib/drupal"
 import { Layout } from "components/layout"
-import { NodeArticleTeaser } from "components/node--article--teaser"
+import { NodeBasicPage } from "components/node--basic-page"
 
 interface IndexPageProps {
-  nodes: DrupalNode[]
+  node: DrupalNode[]
 }
 
-export default function IndexPage({ nodes }: IndexPageProps) {
+export default function IndexPage({ node }) {
   return (
     <Layout>
       <Head>
@@ -20,42 +20,22 @@ export default function IndexPage({ nodes }: IndexPageProps) {
           content="A Next.js site powered by a Drupal backend."
         />
       </Head>
-      <div>
-        <h1 className="mb-10 text-6xl font-black">Latest Articles.</h1>
-        {nodes?.length ? (
-          nodes.map((node) => (
-            <div key={node.id}>
-              <NodeArticleTeaser node={node} />
-              <hr className="my-20" />
-            </div>
-          ))
-        ) : (
-          <p className="py-4">No nodes found</p>
-        )}
-      </div>
+      <NodeBasicPage node={node} />
     </Layout>
   )
 }
 
-export async function getStaticProps(
-  context
-): Promise<GetStaticPropsResult<IndexPageProps>> {
-  const nodes = await drupal.getResourceCollectionFromContext<DrupalNode[]>(
-    "node--article",
-    context,
-    {
-      params: {
-        "filter[status]": 1,
-        "fields[node--article]": "title,path,field_image,uid,created",
-        include: "field_image,uid",
-        sort: "-created",
-      },
-    }
+export async function getStaticProps() {
+  // Fetch the node from Drupal.
+  const node = await drupal.getResource(
+    "node--page",
+    "7acbbc7a-e35c-4d4e-a3a8-43b45ef392ca"
   )
 
+  // Pass the node as props to the AboutPage.
   return {
     props: {
-      nodes,
+      node,
     },
   }
 }
