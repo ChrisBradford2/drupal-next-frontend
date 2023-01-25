@@ -5,9 +5,10 @@ import { DrupalNode } from "next-drupal"
 import { drupal } from "lib/drupal"
 import { NodeArticle } from "components/node--article"
 import { NodeBasicPage } from "components/node--basic-page"
+import { NodeAnnonce } from "components/node--annonce"
 import { Layout } from "components/layout"
 
-const RESOURCE_TYPES = ["node--page", "node--article"]
+const RESOURCE_TYPES = ["node--page", "node--article", "node--annonce"]
 
 interface NodePageProps {
   resource: DrupalNode
@@ -24,6 +25,7 @@ export default function NodePage({ resource }: NodePageProps) {
       </Head>
       {resource.type === "node--page" && <NodeBasicPage node={resource} />}
       {resource.type === "node--article" && <NodeArticle node={resource} />}
+      {resource.type === "node--annonce" && <NodeAnnonce node={resource} />}
     </Layout>
   )
 }
@@ -60,6 +62,17 @@ export async function getStaticProps(
     context,
     {
       params,
+    }
+  )
+
+  const deleteNode = await drupal.deleteResource(
+    "node--annonce",
+    resource.id,
+    {
+      withAuth: {
+        username: "admin",
+        password: "admin",
+      }
     }
   )
 

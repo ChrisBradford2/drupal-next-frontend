@@ -12,13 +12,8 @@ export function Layout({ children }) {
             <Link href="/" className="text-2xl font-semibold no-underline">
               Next.js for Drupal
             </Link>
-            <Link
-              href="https://next-drupal.org/docs"
-              target="_blank"
-              rel="external"
-              className="hover:text-blue-600"
-            >
-              Read the docs
+            <Link href="/login" className="no-underline hover:text-blue-600">
+              Login
             </Link>
           </div>
         </header>

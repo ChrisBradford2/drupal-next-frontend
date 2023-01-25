@@ -5,12 +5,14 @@ import { DrupalNode } from "next-drupal"
 import { drupal } from "lib/drupal"
 import { Layout } from "components/layout"
 import { NodeBasicPage } from "components/node--basic-page"
+import { NodeAnnonceTeaser } from "components/node--annonce--teaser"
 
 interface IndexPageProps {
   node: DrupalNode[]
+  three_last_adds: DrupalNode[]
 }
 
-export default function IndexPage({ node }) {
+export default function IndexPage({ node, three_last_adds }) {
   return (
     <Layout>
       <Head>
