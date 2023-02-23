@@ -1,5 +1,0 @@
-0. Créer un form display pour l'édition en front 
-1. Créer une page FO (formulaire)
-    b. /$entity_type/$nid/edit
-    a. NID
-
